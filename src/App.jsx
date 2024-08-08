@@ -13,7 +13,7 @@ function App() {
       return [
         ...currentTodos,
         {
-          id: currentTodos.length + 1,
+          id: crypto.randomUUID(),
           title: newItem,
           completed: false
         }
@@ -39,13 +39,18 @@ function App() {
       </form>
       <h1 className="header">TodoList</h1>
       <ul className="list">
-        <li>
-          <label htmlFor="">
-            <input type="checkbox"/>
-            Item 1
-          </label>
-          <button className="btn btn-danger">Delete </button>
-        </li>
+        {todos.map(todo => {
+          return (
+          <li key={todo.id}>
+            <label htmlFor="">
+              <input type="checkbox"
+              checked={todo.completed}/>
+              {todo.title}
+            </label>
+            <button className="btn btn-danger">Delete </button>
+          </li>
+        )
+        })}
       </ul>
     </>
   )
