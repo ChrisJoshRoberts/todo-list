@@ -8,7 +8,6 @@ function App() {
 
   const handleSubmit = e => {
     e.preventDefault()
-
     setTodos((currentTodos) => {
       return [
         ...currentTodos,
@@ -19,8 +18,24 @@ function App() {
         }
       ]
     })
+    console.log(`Adding new item: ${newItem}`)
+    setNewItem(''); // clear input
   }
 
+  function toggleTodo(id, completed) {
+    console.log(`Toggling todo with id: ${id} to ${completed}`)
+      setTodos(currentTodos => {
+        return currentTodos.map(todo => {
+          if (todo.id === id) {
+            return {
+              ...todo,
+              completed
+            }
+          }
+          return todo
+        })
+      })
+    }
 
   return (
     <>
@@ -43,11 +58,12 @@ function App() {
           return (
           <li key={todo.id}>
             <label htmlFor="">
-              <input type="checkbox"
-              checked={todo.completed}/>
+              <input type="checkbox" checked={todo.completed}
+              onChange={e => toggleTodo(todo.id, e.target.checked)}
+              />
               {todo.title}
             </label>
-            <button className="btn btn-danger">Delete </button>
+            <button className="btn btn-danger">Delete</button>
           </li>
         )
         })}
