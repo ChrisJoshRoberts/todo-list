@@ -5,7 +5,6 @@ import { useState } from 'react'
 function App() {
   const [newItem, setNewItem] = useState('')
   const [todos, setTodos] = useState([])
-
   const handleSubmit = e => {
     e.preventDefault()
     setTodos((currentTodos) => {
@@ -15,28 +14,22 @@ function App() {
           id: crypto.randomUUID(),
           title: newItem,
           completed: false
-        }
+        },
       ]
     })
-    console.log(`Adding new item: ${newItem}`)
     setNewItem(''); // clear input
   }
-
   function toggleTodo(id, completed) {
-    console.log(`Toggling todo with id: ${id} to ${completed}`)
       setTodos(currentTodos => {
         return currentTodos.map(todo => {
           if (todo.id === id) {
-            return {
-              ...todo,
-              completed
-            }
+            return { ...todo, completed }
           }
           return todo
         })
       })
+      console.log(id, completed)
     }
-
   return (
     <>
       <form onSubmit={handleSubmit} className='new-item-form'>
@@ -57,9 +50,9 @@ function App() {
         {todos.map(todo => {
           return (
           <li key={todo.id}>
-            <label htmlFor="">
+            <label>
               <input type="checkbox" checked={todo.completed}
-              onChange={e => toggleTodo(todo.id, e.target.checked)}
+                onChange={e => toggleTodo(todo.id, e.target.checked)}
               />
               {todo.title}
             </label>
@@ -71,5 +64,4 @@ function App() {
     </>
   )
 }
-
 export default App
